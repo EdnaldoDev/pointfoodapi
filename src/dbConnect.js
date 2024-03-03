@@ -1,8 +1,7 @@
 import mongoose from 'mongoose'
-
-export const  connectDB= ()=>{
+export const  connectDB= (mongodbKey)=>{
    try{
-    mongoose.connect('mongodb+srv://ednaldoend007:End007@cluster0.oz0yqh5.mongodb.net/estabelecimentos?retryWrites=true&w=majority')
+    mongoose.connect(mongodbKey)
     .then(()=>{
         console.log('MongoDB Connected...')
     })

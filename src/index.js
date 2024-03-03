@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import dotenv from 'dotenv' 
 import {connectDB} from './dbConnect.js'
 
 import {login, signUp} from './admin/controllers/authController.js'
@@ -13,9 +14,10 @@ import {Authenticate} from './middleweres/authenticate.js'
 import {AuthenticateClient} from './middleweres/aunthenticateClient.js'
 
 import {newOrder} from './client/order.js'
-
+dotenv.config()
 const app= express()
 const port=3001
+const mongodbKey= process.env.MONGO_DB_KEY
 
 app.use(express.json())
 app.use(cors())
@@ -26,8 +28,8 @@ app.use((req, res, next)=>{
   next();
 })
 
-
-connectDB()
+// console.log(mongodbKey)
+connectDB(mongodbKey)
 app.post('/signup', async(req, res)=>{
   const restaurantData= req.body
   console.log(restaurantData)
