@@ -65,7 +65,7 @@ app.post('/update-infos', Authenticate,  updateInfos )
 
 
 //client 
-
+app.get('/', (req, res)=>res.send('Hello world'))
 app.get('/app/products',AuthenticateClient, listProducts)
 
 app.post('/app/new-order',  AuthenticateClient, newOrder)
