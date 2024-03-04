@@ -25,13 +25,13 @@ const port=3001
 const mongodbKey= process.env.MONGO_DB_KEY
 
 app.use(express.json())
-app.use(cors({origin:"https://pointfood.vercel.app"}))
-// app.use((req, res, next)=>{
-//   res.header('Access-Control-Allow-Origin', 'https://pointfood.vercel.app/');
-//   res.header('Access-Control-Allow-Methods', 'GET, POST');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   next();
-// })
+// app.use(cors({origin:"https://pointfood.vercel.app"}))
+app.use((req, res, next)=>{
+  res.header('Access-Control-Allow-Origin', 'https://pointfood.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+})
 
 // console.log(mongodbKey)
 connectDB(mongodbKey)
