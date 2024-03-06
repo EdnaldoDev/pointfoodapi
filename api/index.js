@@ -33,8 +33,9 @@ app.use((req, res, next)=>{
   next();
 })
 
-// console.log(mongodbKey)
 connectDB(mongodbKey)
+console.log(mongodbKey)
+
 app.post('/signup', async(req, res)=>{
   const restaurantData= req.body
   console.log(restaurantData)
