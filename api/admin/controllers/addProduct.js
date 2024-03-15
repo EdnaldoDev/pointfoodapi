@@ -3,16 +3,18 @@ import mongoose from 'mongoose'
 import {Restaurante} from '../../schemas/db.js'
 
 export const addItemToMenu=async(req, res)=>{
-    const { newProduct } = req.body;
+    const { newProduct, category } = req.body;
     const restaurante = res.user;
-
     try {
+        if (!restaurante.cardapio) {
+            res.send('Restaurante nao encontrado')
+        }
         // Verificar se a categoria existe, caso contrário, inicializá-la como um array vazio
-        if (!restaurante.cardapio[newProduct.category]) {
-            restaurante.cardapio[newProduct.category] = [];
+        if (!restaurante.cardapio.get(category)) {
+            restaurante.cardapio.set(category, [])
         }
 
-        restaurante.cardapio[newProduct.category].push(newProduct);
+        restaurante.cardapio.set(category, [...restaurante.cardapio.get(category), newProduct])
         await restaurante.save();
         res.json(restaurante);
     } catch (err) {

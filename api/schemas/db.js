@@ -96,10 +96,8 @@ export const RestauranteSchema = new Schema({
     }]
   }],
   cardapio: {
-    burgers: [ProdutoSchema],
-    drinks: [ProdutoSchema],
-    icecreams: [ProdutoSchema],
-    pizzas: [ProdutoSchema],
+   type:Map,
+   of:[ProdutoSchema]
   },
   endereco: EnderecoSchema,
   informacoes_negocio: InformacoesNegocioSchema,

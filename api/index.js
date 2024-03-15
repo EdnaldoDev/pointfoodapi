@@ -14,6 +14,10 @@ import {Authenticate} from './middleweres/authenticate.js'
 import {AuthenticateClient} from './middleweres/aunthenticateClient.js'
 
 import {newOrder} from './client/order.js'
+import { updateCardapio } from './admin/controllers/updateProduct.js'
+import {addCategory} from './admin/controllers/addCategory.js'
+import { deleteCategory } from './admin/controllers/deleteCategory.js'
+
 dotenv.config()
 
 
@@ -34,11 +38,9 @@ app.use((req, res, next)=>{
 })
 
 connectDB(mongodbKey)
-console.log(mongodbKey)
 
 app.post('/signup', async(req, res)=>{
   const restaurantData= req.body
-  console.log(restaurantData)
   
     try {
       const push = await signUp(restaurantData);
@@ -68,6 +70,10 @@ app.post('/login', async(req, res)=>{
 app.post('/add-product',Authenticate ,addItemToMenu)
 
 app.post('/update-infos', Authenticate,  updateInfos )
+
+app.post('/update-cardapio', Authenticate, updateCardapio)
+app.post('/add-category', Authenticate, addCategory)
+app.post('/delete-category', Authenticate, deleteCategory)
 
 
 //client 

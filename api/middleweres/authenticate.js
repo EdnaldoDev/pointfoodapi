@@ -1,7 +1,7 @@
 import { Restaurante } from "../schemas/db.js"
 
 export async function Authenticate(req, res, next){
-    console.log(req.body)
+ 
 
    try{
     const restaurante= await  Restaurante.findById(req.body._id) 
