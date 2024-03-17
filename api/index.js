@@ -15,7 +15,7 @@ import {AuthenticateClient} from './middleweres/aunthenticateClient.js'
 
 import {newOrder} from './client/order.js'
 import { updateCardapio } from './admin/controllers/updateProduct.js'
-import {addCategory} from './admin/controllers/addCategory.js'
+import {updateCategory} from './admin/controllers/addCategory.js'
 import { deleteCategory } from './admin/controllers/deleteCategory.js'
 
 dotenv.config()
@@ -74,8 +74,8 @@ app.post('/add-product',Authenticate ,addItemToMenu)
 app.post('/update-infos', Authenticate,  updateInfos )
 
 app.post('/update-cardapio', Authenticate, updateCardapio)
-app.post('/add-category', Authenticate, addCategory)
-app.post('/delete-category', Authenticate, deleteCategory)
+app.post('/add-category', Authenticate, updateCategory)
+app.post('/delete-category', Authenticate, updateCategory)
 
 
 //client 
