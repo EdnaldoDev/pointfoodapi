@@ -16,7 +16,6 @@ import {AuthenticateClient} from './middleweres/aunthenticateClient.js'
 import {newOrder} from './client/order.js'
 import { updateCardapio } from './admin/controllers/updateProduct.js'
 import {updateCategory} from './admin/controllers/addCategory.js'
-import { deleteCategory } from './admin/controllers/deleteCategory.js'
 
 dotenv.config()
 
