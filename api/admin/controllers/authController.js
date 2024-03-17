@@ -20,9 +20,8 @@ export async function login(email, password){
     const  restaurant = await Restaurante.findById(email)
     if(!restaurant) throw new Error ('Usuário não encontrado');
     
-    if(restaurant.senha !== password){
-       return  {msg:"Senha incorreta"};  
-    }
+    if(restaurant.senha !== password) throw new Error ('Senha incorreta!') ;  
 
     return restaurant
+
 }

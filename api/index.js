@@ -57,12 +57,14 @@ app.post('/login', async(req, res)=>{
 
 
     try {
-        const restaurante = await login(email, password);
-        res.json({restaurante, text:'Login successfuly'});
+        const restaurant = await login(email, password);
+        
+        if(restaurant){
+          res.status(200).json({restaurant, text:'Login successfuly'});
+        }
 
       } catch (error) {
-        console.error('Erro no login:', error);
-        res.status(500).send('Erro no login'); // Envie uma resposta de erro 500
+        res.status(500).json({text:String(error)}); // Envie uma resposta de erro 500
       }
 }) 
 
