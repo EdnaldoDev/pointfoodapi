@@ -10,8 +10,8 @@ export const updateCategory=async (req, res)=>{
 
     try {
         // Verificar se restaurante é um documento válido do modelo Restaurante
-        if (!restaurante || !restaurante.cardapio) {
-            return res.status(400).json({ text: 'Restaurante inválido ou cardápio não encontrado.' });
+        if (!restaurante ) {
+            return res.status(400).json({ text: 'Restaurante inválido ' });
         }
     
         // Verificar se category está definido

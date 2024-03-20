@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 export const  connectDB= (mongodbKey)=>{
    try{
-    mongoose.connect(mongodbKey,{ useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect(mongodbKey)
     .then(()=>{
         console.log('MongoDB Connected...')
     })

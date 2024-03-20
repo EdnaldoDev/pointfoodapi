@@ -17,6 +17,7 @@ import {newOrder} from './client/order.js'
 import { updateCardapio } from './admin/controllers/updateProduct.js'
 import {updateCategory} from './admin/controllers/addCategory.js'
 
+
 dotenv.config()
 
 
@@ -43,7 +44,10 @@ app.post('/signup', async(req, res)=>{
   
     try {
       const push = await signUp(restaurantData);
-      res.send(push);
+      
+      res.status(push.status).json(push)
+     
+
     } catch (error) {
       console.error('Erro no cadastro:', error);
       res.status(500).send('Erro no cadastro'); // Envie uma resposta de erro 500

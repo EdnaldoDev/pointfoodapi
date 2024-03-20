@@ -3,12 +3,22 @@ import {Restaurante} from '../../schemas/db.js'
 
 export async function signUp(restaurantData){
     try{
-        const newRestaurante = await Restaurante.create(restaurantData)
+        const existRestaurant= await Restaurante.findById(restaurantData.email)
+        if(existRestaurant){
+            return({status:500,text:'Email ja cadastrado na plataforma, faça login ou entre com outro email'})
+        }
+
+        const newRestaurante = await Restaurante.create({
+            ...restaurantData, 
+            _id:restaurantData.
+            email, 
+            storeToken:`${restaurantData.email}/${restaurantData.nome}`
+        })
 
         const savedRestaurante= await newRestaurante.save()
 
         // console.log('Restaurante cadastrado com sucesso:', savedRestaurante);
-        return {text:'Cadastrado com sucesso', savedRestaurante};
+        return {text:'Cadastrado com sucesso', savedRestaurante, status:200};
     }catch(err){
         // console.error("Erro no cadastro do restaurante", err);
         return {text:'Ero ao cadastrar restaurante', err};

@@ -97,7 +97,8 @@ export const RestauranteSchema = new Schema({
   }],
   cardapio: {
    type:Map,
-   of:[ProdutoSchema]
+   of:[ProdutoSchema],
+   default:new Map()
   },
   endereco: EnderecoSchema,
   informacoes_negocio: InformacoesNegocioSchema,
