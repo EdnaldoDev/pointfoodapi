@@ -40,19 +40,12 @@ export const  EnderecoSchema = new Schema({
 
 // Esquema para informações do negócio
 export const  InformacoesNegocioSchema = new Schema({
-  contato: {
-    email: String,
-    telefone: String,
-  },
-  endereco: EnderecoSchema,
-  horario_funcionamento: String,
-  logo: String,
-  nome_restaurante: String,
-  tema: {
-    cor_cartao_produto: String,
-    cor_da_fonte: String,
-    cor_de_fundo: String,
-  },
+    tema: {
+        cor_de_fundo: { type: String, default: '#00f' },
+        cor_da_fonte: { type: String, default: '#fff' }
+    },
+    logo: { type: String, default: '' },
+    deliveryTax: { type: String, default: '0' }
 });
 
 // Esquema para pedidos
@@ -63,10 +56,21 @@ export const  ProdutoPedidoSchema = new Schema({
   preco: String,
 });
 
-export const PedidoSchema = new Schema({
-  cliente_id: { type: Schema.Types.ObjectId, ref: 'Cliente' },
-  produtos: [ProdutoPedidoSchema],
-});
+// export const PedidoSchema = new Schema({
+//   cliente_id: { type: Schema.Types.ObjectId, ref: 'Cliente' },
+//   produtos: [ProdutoPedidoSchema],
+// });
+
+const PedidoSchema = new Schema({
+    deliveryMethod:{ type: String, required: true },
+    total:{ type: String, required: true },
+    customerId:{type:String, required:true},
+    items:[{
+      qtd:{ type: String, required: true },
+      itemId:{type:String, required:true},
+      snack:{type:String, required:true}
+    }]
+})
 
 // Esquema principal
 export const RestauranteSchema = new Schema({
@@ -86,15 +90,7 @@ export const RestauranteSchema = new Schema({
     }
    }
   ],
-  pedidos: [{
-    deliveryMethod:{ type: String, required: false },
-    total:{ type: String, required: false },
-    customerId:{type:String, required:false},
-    items:[{
-      qtd:{ type: String, required: false },
-      itemId:{type:String, required:false}
-    }]
-  }],
+  pedidos: [PedidoSchema],
   cardapio: {
    type:Map,
    of:[ProdutoSchema],

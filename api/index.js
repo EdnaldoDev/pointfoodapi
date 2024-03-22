@@ -85,5 +85,5 @@ app.post('/delete-category', Authenticate, updateCategory)
 app.get('/', (req, res)=>res.send('Hello world'))
 app.get('/app/products',AuthenticateClient, listProducts)
 
-app.post('/app/new-order',  AuthenticateClient, newOrder)
+app.post('/app/new-order',AuthenticateClient, newOrder)
 app.listen(port, ()=>console.log('server listencing on port ', port))

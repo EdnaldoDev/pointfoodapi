@@ -28,6 +28,7 @@ export async function newOrder(req, res){
 }
 
 async function addNewOrder(customerId, restaurant, data, res){
+
     try{
         
         const pushOrder = await restaurant.pedidos.push({

@@ -12,7 +12,7 @@ export async function signUp(restaurantData){
             ...restaurantData, 
             _id:restaurantData.
             email, 
-            storeToken:`${restaurantData.email}/${restaurantData.nome}`
+            storeToken:`${restaurantData.email}/${restaurantData.nome}`,
         })
 
         const savedRestaurante= await newRestaurante.save()
@@ -31,7 +31,6 @@ export async function login(email, password){
     if(!restaurant) throw new Error ('Usuário não encontrado');
     
     if(restaurant.senha !== password) throw new Error ('Senha incorreta!') ;  
-
     return restaurant
 
 }

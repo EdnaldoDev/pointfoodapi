@@ -20,7 +20,7 @@ export const updateCardapio=async (req, res)=>{
             res.json({ text: 'Informações atualizadas', restaurant:updatedRestaurante});
         }
     } catch (err) {
-        console.log(err);
+        console.log('error in updateProduct.js', err);
         res.status(500).json({ text: 'Erro ao atualizar o cardápio no banco de dados', err });
     }
 }

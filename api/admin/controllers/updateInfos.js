@@ -4,7 +4,6 @@ export async function updateInfos(req, res){
     const {prop, value}=req.body
     const restaurante= res.user
 
-
     try{
         
         if (prop.length === 1) {
@@ -27,7 +26,7 @@ export async function updateInfos(req, res){
         const updatedRestaurante = await Restaurante.findById(req.body._id)
         res.status(200).json({ success: true, message: 'Restaurante atualizado com sucesso', updatedRestaurante })
     }catch(err){
-        console.log(err)
+        console.log('uodateinfo.js ' ,err)
         res.status(400).json({ success: false, erro:err, message: 'Não foi possivel atualizar o restaurante, tente novamnete mais tarde' })
     }
 }
