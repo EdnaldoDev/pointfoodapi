@@ -6,7 +6,7 @@ export const updateCardapio=async (req, res)=>{
     const { newCardapio,category, permission} = req.body;
     const restaurante = res.user;
 
-    // console.log(newCardapio)
+    // //(newCardapio)
 
     try {
         // Verificar se newCardapio é um objeto não vazio
@@ -20,7 +20,7 @@ export const updateCardapio=async (req, res)=>{
             res.json({ text: 'Informações atualizadas', restaurant:updatedRestaurante});
         }
     } catch (err) {
-        console.log('error in updateProduct.js', err);
+        //('error in updateProduct.js', err);
         res.status(500).json({ text: 'Erro ao atualizar o cardápio no banco de dados', err });
     }
 }

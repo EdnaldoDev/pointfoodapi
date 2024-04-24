@@ -26,7 +26,7 @@ export async function updateInfos(req, res){
         const updatedRestaurante = await Restaurante.findById(req.body._id)
         res.status(200).json({ success: true, message: 'Restaurante atualizado com sucesso', updatedRestaurante })
     }catch(err){
-        console.log('uodateinfo.js ' ,err)
+        //('uodateinfo.js ' ,err)
         res.status(400).json({ success: false, erro:err, message: 'Não foi possivel atualizar o restaurante, tente novamnete mais tarde' })
     }
 }

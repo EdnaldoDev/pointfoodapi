@@ -62,15 +62,99 @@ export const  ProdutoPedidoSchema = new Schema({
 // });
 
 const PedidoSchema = new Schema({
-    deliveryMethod:{ type: String, required: true },
-    total:{ type: String, required: true },
-    customerId:{type:String, required:true},
-    items:[{
-      qtd:{ type: String, required: true },
-      itemId:{type:String, required:true},
-      snack:{type:String, required:true}
-    }]
-})
+  status:{
+    type: String,
+    enum: ['Wait Confirmation','Accepted', 'Recused', 'InProduction', 'OnWay', 'Delivered'],
+    required: true
+  },
+  orderNumber: {
+    type: String,
+    default: Date.now().toString()
+  },
+  clientId: {
+    type: String,
+    // Assuming formData is an object passed to the function or retrieved from somewhere
+    // If formData.name is a string, then this should work, but ensure that it's properly defined before using it
+  },
+  total: {
+    type: Number,
+    required: true
+  },
+  customer: {
+    name: {
+      type: String,
+      required: true
+    },
+    phone: {
+      type: String,
+      required: true
+    },
+    shippingDetails: {
+      deliveryMethod: {
+        type: String,
+        required: true
+      },
+      name: {
+        type: String,
+        required: true
+      },
+      address: {
+        type: String,
+      },
+      number: {
+        type: String
+      },
+      complement: {
+        type: String
+      },
+      neighborhood: {
+        type: String,
+      },
+      cellphone: {
+        type: String,
+        required: true
+      },
+      paymentMethod: {
+        type: String,
+        enum: ['Dinheiro', 'Pix'],
+        required: true
+      },
+      moreDetails: {
+        type: String
+      },
+      cashback: {
+        type: Number
+      }
+    }
+  },
+  items: [
+    {
+      qtd: {
+        type: Number,
+        required: true
+      },
+      itemId: {
+        type: Schema.Types.ObjectId,
+        required: true
+      },
+      snack: {
+        type: String,
+        required: true
+      },
+      img: {
+        type: String
+      },
+      name: {
+        type: String,
+        required: true
+      },
+      price: {
+        type: Number,
+        required: true
+      }
+    }
+  ]
+});
 
 // Esquema principal
 export const RestauranteSchema = new Schema({

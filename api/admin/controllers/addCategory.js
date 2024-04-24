@@ -46,7 +46,7 @@ export const updateCategory=async (req, res)=>{
 
     
     } catch (err) {
-        console.log(err);
+        //(err);
         res.status(500).json({ text: 'Erro ao atualizar o cardápio no banco de dados', err });
     }
 }

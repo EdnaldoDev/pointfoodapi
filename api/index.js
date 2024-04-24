@@ -2,18 +2,24 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv' 
+import http from 'http'
+
+import {Server} from 'socket.io'
+
 import {connectDB} from './dbConnect.js'
+
+
 
 import {login, signUp} from './admin/controllers/authController.js'
 import {addItemToMenu} from './admin/controllers/addProduct.js'
 import {updateInfos} from './admin/controllers/updateInfos.js'
+import { newOrder } from './admin/controllers/newOrder.js'
 
 import {listProducts} from './client/listProducts.js'
 
 import {Authenticate} from './middleweres/authenticate.js'
 import {AuthenticateClient} from './middleweres/aunthenticateClient.js'
 
-import {newOrder} from './client/order.js'
 import { updateCardapio } from './admin/controllers/updateProduct.js'
 import {updateCategory} from './admin/controllers/addCategory.js'
 
@@ -22,8 +28,13 @@ dotenv.config()
 
 
 const app= express()
-
-
+const server= http.createServer(app)
+export const io = new Server(server,{
+  cors:{
+    origin:"*",
+    method:['GET', 'POST']
+  }
+})
 
 const port=3001
 const mongodbKey= process.env.MONGO_DB_KEY
@@ -79,11 +90,66 @@ app.post('/update-infos', Authenticate,  updateInfos )
 app.post('/update-cardapio', Authenticate, updateCardapio)
 app.post('/add-category', Authenticate, updateCategory)
 app.post('/delete-category', Authenticate, updateCategory)
-
+app.post('/new-order', Authenticate, newOrder)
 
 //client 
 app.get('/', (req, res)=>res.send('Hello world'))
 app.get('/app/products',AuthenticateClient, listProducts)
 
 app.post('/app/new-order',AuthenticateClient, newOrder)
-app.listen(port, ()=>console.log('server listencing on port ', port))
+
+const connectedSockets = {};
+
+io.on("connection", (socket) => {
+  // disconnectAllClients()
+  socket.on('connected', (clientId) => {
+    if(connectedSockets[clientId]){
+      //("Cliente ja conectado:", clientId);
+      return;
+    }
+    // Adicionar o socket conectado ao objeto de sockets conectados
+      connectedSockets[clientId] = socket;
+      //("Cliente conectado:", clientId);
+  });
+
+  socket.on('new-order', (data) => {
+    // Enviar a mensagem para todos os sockets conectados
+      connectedSockets['adm001']?.emit('new-order', data)
+      //("Nova mensagem enviada para o cliente:", 'adm001');
+  });
+
+  socket.on('confirmOrder',(data)=>{
+    //(data)
+    connectedSockets[data.clientId]?.emit('confirmOrder', data.obj)
+    //("Nova mensagem enviada para o cliente:", data.clientId);
+  })
+
+  socket.on('orderStatusChanged', (data)=>{
+    connectedSockets[data.clientId]?.emit('orderStatusChanged', data.obj)
+    //("Nova mensagem enviada para o cliente:", data.clientId);
+  })
+
+  socket.on("disconnect", () => {
+      // Remover o socket desconectado do objeto de sockets conectados
+      for (const clientId in connectedSockets) {
+          if (connectedSockets[clientId] === socket) {
+              delete connectedSockets[clientId];
+              //("Cliente desconectado:", clientId);
+              break;
+          }
+      }
+  });
+});
+
+function disconnectAllClients() {
+  // Iterar sobre todos os sockets conectados
+  io.sockets.sockets.forEach(socket => {
+      // Desconectar o socket
+      socket.disconnect(true);
+  });
+
+  //('Todos os clientes foram desconectados.');
+}
+
+
+server.listen(port, ()=>console.log('server listencing on port ', port))

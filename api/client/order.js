@@ -2,15 +2,16 @@ import { Restaurante } from "../schemas/db.js"
 
 export async function newOrder(req, res){
 
-    const restaurant= res.user
-    // console.log(req.body)
+    const [restaurant]= res.user
+    
+    // //(req.body)
     if(!restaurant){
         res.status(401).send({error:'Não foi possivel encontrar o o restaurante'})
     }
 
-    // console.log(req.body.customer)
+    // //(req.body.customer)
     let customer
-    if(restaurant.clientes.length>0){
+    if(restaurant.clientes){
         customer= restaurant.clientes.find(cliente=>cliente.phone === req.body.customer.phone)
     }
 

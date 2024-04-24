@@ -18,7 +18,7 @@ export const addItemToMenu=async(req, res)=>{
         await restaurante.save();
         res.json(restaurante);
     } catch (err) {
-        console.log(err);
+        //(err);
         res.status(500).json({ text: 'Erro ao adicionar produto ao cardápio', err });
     }
 }

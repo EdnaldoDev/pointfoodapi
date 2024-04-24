@@ -6,6 +6,6 @@ export const  connectDB= (mongodbKey)=>{
         console.log('MongoDB Connected...')
     })
    }catch(err){
-    console.log(err)
+    //(err)
    }
 }  

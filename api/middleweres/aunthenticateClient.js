@@ -11,12 +11,12 @@ export async function AuthenticateClient(req, res, next){
     if(!restaurante){
         res.status(404).send('Restaurante não encontrado')
     }else{
-        // console.log(restaurante)
+        // //(restaurante)
         res.user=restaurante
 
         next()
     }
    }catch(err){
-    console.log(err)
+    //(err)
    }
 }
