@@ -18,7 +18,6 @@ import { newOrder } from './admin/controllers/newOrder.js'
 import {listProducts} from './client/listProducts.js'
 
 import {Authenticate} from './middleweres/authenticate.js'
-import {AuthenticateClient} from './middleweres/aunthenticateClient.js'
 
 import { updateCardapio } from './admin/controllers/updateProduct.js'
 import {updateCategory} from './admin/controllers/addCategory.js'
@@ -94,9 +93,9 @@ app.post('/new-order', Authenticate, newOrder)
 
 //client 
 app.get('/', (req, res)=>res.send('Hello world'))
-app.get('/app/products',AuthenticateClient, listProducts)
+app.post('/app/products',Authenticate, listProducts)
 
-app.post('/app/new-order',AuthenticateClient, newOrder)
+app.post('/app/new-order',Authenticate, newOrder)
 
 const connectedSockets = {};
 
@@ -104,12 +103,12 @@ io.on("connection", (socket) => {
   // disconnectAllClients()
   socket.on('connected', (clientId) => {
     if(connectedSockets[clientId]){
-      //("Cliente ja conectado:", clientId);
+      console.log("Cliente ja conectado:", clientId);
       return;
     }
     // Adicionar o socket conectado ao objeto de sockets conectados
       connectedSockets[clientId] = socket;
-      //("Cliente conectado:", clientId);
+      console.log("Cliente conectado:", clientId);
   });
 
   socket.on('new-order', (data) => {

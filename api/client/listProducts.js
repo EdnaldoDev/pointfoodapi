@@ -12,12 +12,12 @@ export const listProducts=async (req, res)=>{
     }
 
     const restaurantData={
-        _id:restaurante[0]._id,
-        nome: restaurante[0].nome,
-        telefone: restaurante[0].telefone,
-        cardapio:restaurante[0].cardapio,
-        informacoes_negocio:restaurante[0].informacoes_negocio,
-        storeToken:restaurante[0].storeToken
+        _id:restaurante._id,
+        nome: restaurante.nome,
+        telefone: restaurante.telefone,
+        cardapio:restaurante.cardapio,
+        informacoes_negocio:restaurante.informacoes_negocio,
+        storeToken:restaurante.storeToken
     }
     res.status(200).json(restaurantData)
 }
